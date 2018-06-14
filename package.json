@@ -1,26 +1,11 @@
 {
-  "name": "timesheet",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node app --presets=env"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ryasnoy/Timesheet.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ryasnoy/Timesheet/issues"
-  },
-  "homepage": "https://github.com/Ryasnoy/Timesheet#readme",
   "dependencies": {
-    "node-telegram-bot-api": "^0.30.0"
-  },
-  "devDependencies": {
     "babel-cli": "^6.26.0",
-    "nodemon": "^1.17.5"
+    "babel-preset-env": "^1.7.0",
+    "config": "^1.30.0",
+    "node-telegram-bot-api": "^0.30.0"
   }
 }

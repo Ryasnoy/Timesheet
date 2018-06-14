@@ -1,5 +1,7 @@
-const TOKEN = require('./token.js')
-const TelegramBot = require('node-telegram-bot-api')
+import config from 'config'
+import TelegramBot from 'node-telegram-bot-api'
+
+const TOKEN = config.get('token')
 const bot = new TelegramBot(TOKEN, { polling: true })
 
 var dateOptions = {
@@ -13,7 +15,7 @@ var dateOptions = {
 };
 
 bot.onText(/\/all/, function (msg, match) {
-    
+
 });
 
 bot.onText(/\/worker/, function (msg, match) {
@@ -37,4 +39,24 @@ bot.on('callback_query', function (msg) {
             bot.sendMessage(msg.from.id, "undefined")
             break
     }
+})
+
+bot.on('inline_query', query => {
+    const results = []
+    for (let i = 0; i < 3; i++) {
+        results.push({
+            id: i.toString(),
+            type: 'article',
+            title: `Title ${i}`,
+            input_message_content: {
+                message_text: "DESCRIPTION"
+            }
+        })
+    }
+    bot.answerInlineQuery(query.id, results, {
+        cache_time: 0,
+        switch_pm_text: 'Talk directly',
+        switch_pm_parameter: 'Hello'
+    })
+
 })
