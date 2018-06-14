@@ -4,59 +4,19 @@ import TelegramBot from 'node-telegram-bot-api'
 const TOKEN = config.get('token')
 const bot = new TelegramBot(TOKEN, { polling: true })
 
-var dateOptions = {
-    reply_markup: JSON.stringify({
-        inline_keyboard: [
-            [{ text: 'Today', callback_data: '0' }],
-            [{ text: 'Yesterday', callback_data: '1' }],
-            [{ text: 'Custom Date', callback_data: '2' }]
-        ]
-    })
-};
-
-bot.onText(/\/all/, function (msg, match) {
-
-});
-
-bot.onText(/\/worker/, function (msg, match) {
-    bot.sendMessage(msg.chat.id, 'Enter your last name:');
-    // TODO: CHECK AND SELECT USER FROM DATABASE
-    //bot.sendMessage(msg.chat.id, 'Set the time period:', dateOptions);
-});
-
-bot.on('callback_query', function (msg) {
-    // console.log(msg)
-
-    switch (parseInt(msg.data)) {
-        case 0:
-            bot.sendMessage(msg.from.id, '0')
-            break
-        case 1: bot.sendMessage(msg.from.id, '1')
-            break
-        case 2: bot.sendMessage(msg.from.id, '2')
-            break
-        default:
-            bot.sendMessage(msg.from.id, "undefined")
-            break
-    }
-})
-
 bot.on('inline_query', query => {
     const results = []
-    for (let i = 0; i < 3; i++) {
-        results.push({
-            id: i.toString(),
-            type: 'article',
-            title: `Title ${i}`,
-            input_message_content: {
-                message_text: "DESCRIPTION"
-            }
-        })
-    }
+    if (query.query.length == 0) { return }
+    results.push({
+        id: "0",
+        type: 'article',
+        title: `${query.query}`,
+        input_message_content: {
+            message_text: "SELECT FROM DATA BASE"
+        }
+    })
     bot.answerInlineQuery(query.id, results, {
-        cache_time: 0,
-        switch_pm_text: 'Talk directly',
-        switch_pm_parameter: 'Hello'
+        cache_time: 0
     })
 
 })
